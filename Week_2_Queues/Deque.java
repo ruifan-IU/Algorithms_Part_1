@@ -41,6 +41,9 @@ public class Deque<Item> implements Iterable<Item> {
         if (last == null) {
             last = first;
         }
+        else {
+            oldFirst.prev = first;
+        }
         size = size + 1;
     }
 
@@ -52,7 +55,7 @@ public class Deque<Item> implements Iterable<Item> {
         last.item = item;
         last.next = null;
         last.prev = oldLast;
-        if (isEmpty()) {
+        if (first == null) {
             first = last;
         }
         else {
@@ -63,7 +66,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the front
     public Item removeFirst() {
-        if (isEmpty()) throw new java.util.NoSuchElementException(
+        if (this.isEmpty()) throw new java.util.NoSuchElementException(
                 "cannot remove from the front of empty deque");
         Item item = first.item;
         if (first == last) {
@@ -80,7 +83,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the back
     public Item removeLast() {
-        if (isEmpty()) throw new java.util.NoSuchElementException(
+        if (this.isEmpty()) throw new java.util.NoSuchElementException(
                 "cannot remove from the back of empty deque");
         Item item = last.item;
         if (first == last) {
@@ -151,6 +154,7 @@ public class Deque<Item> implements Iterable<Item> {
         StdOut.println(size3 == 1);
         StdOut.println(last == 2);
         StdOut.println(size10 == 10);
+
 
         for (int i : deque) {
             StdOut.println(i);
