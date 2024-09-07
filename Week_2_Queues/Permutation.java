@@ -1,18 +1,29 @@
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Permutation {
     public static void main(String[] args) {
         RandomizedQueue<String> rq = new RandomizedQueue<String>();
+        int k = Integer.parseInt(args[0]);
+        int n = 0;
         while (!StdIn.isEmpty()) {
             String str = StdIn.readString();
-            rq.enqueue(str);
+            n++;
+            if (n <= k) {
+                rq.enqueue(str);
+            }
+            else {
+                double p = (double) k / n;
+                boolean include = StdRandom.bernoulli(p);
+                if (include) {
+                    rq.dequeue();
+                    rq.enqueue(str);
+                }
+            }
         }
-        int k = Integer.parseInt(args[0]);
-        while (k > 0) {
-            String str = rq.dequeue();
-            StdOut.println(str);
-            k--;
+        for (String s : rq) {
+            StdOut.println(s);
         }
     }
 }
