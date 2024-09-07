@@ -56,14 +56,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         if (size == 0) throw new java.util.NoSuchElementException("cannot remove from empty queue");
         int randomIndex = StdRandom.uniformInt(head, tail);
-        while (q[randomIndex] == null) {
-            randomIndex = StdRandom.uniformInt(head, tail);
-        }
         Item item = q[randomIndex];
-        q[randomIndex] = null;
+        if (randomIndex == tail - 1) {
+            q[randomIndex] = null;
+        }
+        else {
+            q[randomIndex] = q[tail - 1];
+            q[tail - 1] = null;
+        }
+        tail--;
         size--;
-        if (randomIndex == head) head++;
-        if (randomIndex == tail) tail--;
         if (size > 0 && size == q.length / 4) resize(q.length / 2);
         return item;
     }
